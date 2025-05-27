@@ -45,9 +45,9 @@ namespace DigitalNotesManager
                 if (user != null)
                 {
                     MessageBox.Show("Login successful", "Success");
-                // TODO: Proceed to MainForm or another action
+
                     this.Hide();
-                    var mainForm = new MainForm();
+                    var mainForm = new MainForm(user.UserID, user.Username);
                     mainForm.ShowDialog();
                     this.Close();
                 }

@@ -10,11 +10,20 @@ using System.Windows.Forms;
 
 namespace DigitalNotesManager
 {
+
     public partial class MainForm : Form
     {
-        public MainForm()
+        private readonly int _userID;
+        private readonly string _username;
+        public MainForm(int userID, string username)
         {
             InitializeComponent();
+
+            _userID = userID;
+            _username = username;
+ 
+            CurrentUserID.Text = $"{{ {_userID} }}";
+            CurrentUserName.Text = $"{{ {_username} }}";
         }
     }
 }
