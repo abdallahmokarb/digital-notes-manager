@@ -12,7 +12,7 @@ namespace DigitalNotesManager
 {
     public partial class LoginForm : Form
     {
-        public LoginForm()
+        public LoginForm( )
         {
             InitializeComponent();
         }
@@ -56,6 +56,11 @@ namespace DigitalNotesManager
                     MessageBox.Show("invalid username or password", "Login Failed");
                 }
             }
+
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
 
         }
     }

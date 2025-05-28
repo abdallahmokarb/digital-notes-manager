@@ -21,9 +21,14 @@ namespace DigitalNotesManager
 
             _userID = userID;
             _username = username;
- 
+
             CurrentUserID.Text = $"{{ {_userID} }}";
             CurrentUserName.Text = $"{{ {_username} }}";
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
