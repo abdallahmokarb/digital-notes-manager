@@ -1,4 +1,4 @@
-﻿using DigitalNotesManager.Repository;
+using DigitalNotesManager.Repository;
 using System;
 using System.IO;
 using System.Windows.Forms;
