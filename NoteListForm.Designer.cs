@@ -1,4 +1,4 @@
-﻿namespace DigitalNotesManager
+namespace DigitalNotesManager
 {
     partial class NoteListForm
     {
@@ -35,19 +35,20 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(42, 98);
+            dataGridView1.Location = new Point(1, 2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(709, 204);
+            dataGridView1.Size = new Size(749, 290);
             dataGridView1.TabIndex = 0;
             // 
             // NoteListForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(659, 292);
             Controls.Add(dataGridView1);
             Name = "NoteListForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "NoteListForm";
             Load += NoteListForm_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
