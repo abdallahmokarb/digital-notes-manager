@@ -47,7 +47,8 @@
             arrangeWindowToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
-             flowLayoutPanel1 = new FlowLayoutPanel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            btnShowProgress = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -176,10 +177,10 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(133, 26);
+            aboutToolStripMenuItem.Size = new Size(224, 26);
             aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
-       
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.AutoScroll = true;
@@ -191,6 +192,16 @@
             flowLayoutPanel1.TabIndex = 9;
             flowLayoutPanel1.WrapContents = false;
             // 
+            // btnShowProgress
+            // 
+            btnShowProgress.Location = new Point(1430, 37);
+            btnShowProgress.Name = "btnShowProgress";
+            btnShowProgress.Size = new Size(137, 29);
+            btnShowProgress.TabIndex = 10;
+            btnShowProgress.Text = "Account Reports";
+            btnShowProgress.UseVisualStyleBackColor = true;
+            btnShowProgress.Click += btnShowProgress_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -198,7 +209,8 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1579, 724);
-             Controls.Add(flowLayoutPanel1);
+            Controls.Add(btnShowProgress);
+            Controls.Add(flowLayoutPanel1);
             Controls.Add(CurrentUserID);
             Controls.Add(CurrentUserName);
             Controls.Add(menuStrip1);
@@ -212,7 +224,7 @@
         }
 
         #endregion
-   
+
         private Label CurrentUserName;
         private Label CurrentUserID;
  
@@ -233,6 +245,6 @@
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private FlowLayoutPanel   flowLayoutPanel1;
- 
+        private Button btnShowProgress;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DigitalNotesManager.Repository;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -132,6 +133,21 @@ namespace DigitalNotesManager
 
                 flowLayoutPanel1.Controls.Add(card);
             }
+        }
+
+        private void btnShowProgress_Click(object sender, EventArgs e)
+        {
+
+            ProgressForm progressForm = new ProgressForm(_userID, _username);
+            progressForm.ShowDialog();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutForm aboutForm = new AboutForm();
+            aboutForm.ShowDialog();  
+
+
         }
     }
 }
