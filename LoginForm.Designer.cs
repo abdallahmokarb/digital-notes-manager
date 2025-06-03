@@ -59,6 +59,7 @@
             PasswordTextBox.Name = "PasswordTextBox";
             PasswordTextBox.Size = new Size(247, 27);
             PasswordTextBox.TabIndex = 18;
+            PasswordTextBox.UseSystemPasswordChar = true;
             // 
             // NameTextBox
             // 

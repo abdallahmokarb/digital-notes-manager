@@ -33,7 +33,7 @@ namespace DigitalNotesManager
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Plz enter both username and password", "Validation Error");
+                MessageBox.Show("Plz enter both username and password", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -44,7 +44,7 @@ namespace DigitalNotesManager
 
                 if (user != null)
                 {
-                    MessageBox.Show("Login successful", "Success");
+                    MessageBox.Show("Login successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     this.Hide();
                     var mainForm = new MainForm(user.UserID, user.Username);
@@ -53,7 +53,7 @@ namespace DigitalNotesManager
                 }
                 else
                 {
-                    MessageBox.Show("invalid username or password", "Login Failed");
+                    MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
