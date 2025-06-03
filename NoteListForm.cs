@@ -16,7 +16,7 @@ namespace DigitalNotesManager
         private readonly int _userID;
 
 
-
+        private List<Note> _currentNotes = new List<Note>();
 
         public NoteListForm(int userID)
         {
@@ -190,6 +190,22 @@ namespace DigitalNotesManager
                     MessageBox.Show("Note not found.");
                 }
             }
+        }
+
+        private void SortBtn_Click(object sender, EventArgs e)
+        {
+            if (_currentNotes == null || !_currentNotes.Any())
+            {
+                MessageBox.Show("No notes available to sort.");
+                return;
+            }
+
+            var sortedNotes = _currentNotes.OrderBy(n => n.Title).ToList();
+
+            _currentNotes = sortedNotes;
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = sortedNotes;
+            MessageBox.Show("Sorting triggered!");
         }
     }
 }
