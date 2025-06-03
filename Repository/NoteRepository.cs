@@ -4,20 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace DigitalNotesManager.Repository
 {
     public class NoteRepository
     {
         private readonly string connectionString = "Server=ABDALLAH;Database=DNMDb;Trusted_Connection=True;TrustServerCertificate=True;";
+        private readonly Context context;
+
+        public NoteRepository()
+        {
+            context = new Context();
+        }
 
         public void AddNote(Note note)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = @"INSERT INTO Notes (Title, Content, Category, CreationDate, ReminderDate, UserID)
-                         VALUES (@Title, @Content, @Category, @CreationDate, @ReminderDate, @UserID)";
-
+                                 VALUES (@Title, @Content, @Category, @CreationDate, @ReminderDate, @UserID)";
                 SqlCommand cmd = new SqlCommand(query, connection);
 
                 cmd.Parameters.AddWithValue("@Title", note.Title);
@@ -38,7 +44,7 @@ namespace DigitalNotesManager.Repository
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM Notes WHERE UserID = @UserID";
+                string query = "SELECT * FROM Notes WHERE UserID = @UserID ORDER BY CreationDate DESC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@UserID", userId);
 
@@ -108,7 +114,7 @@ namespace DigitalNotesManager.Repository
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = @"UPDATE Notes SET Title = @Title, Content = @Content, Category = @Category, 
-                        ReminderDate = @ReminderDate WHERE NoteID = @NoteID";
+                                 ReminderDate = @ReminderDate WHERE NoteID = @NoteID";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@NoteID", note.NoteID);
                 cmd.Parameters.AddWithValue("@Title", note.Title);
@@ -119,8 +125,60 @@ namespace DigitalNotesManager.Repository
                 cmd.ExecuteNonQuery();
             }
         }
+
+        // ******************** Filteration ***********
+
+        public List<Note> SearchNotesByText(int userId, string text)
+        {
+            return context.Notes
+                .Where(n => n.UserID == userId &&
+                           (n.Title.Contains(text) || n.Content.Contains(text)))
+                .OrderByDescending(n => n.CreationDate)
+                .ToList();
+        }
+
+        public List<Note> GetNotesByCategory(int userId, string category)
+        {
+            return context.Notes
+                .Where(n => n.UserID == userId && n.Category == category)
+                .OrderByDescending(n => n.CreationDate)
+                .ToList();
+        }
+
+        public List<Note> GetFilteredNotes(int userId, string text, string category)
+        {
+            using (var context = new Context())
+            {
+                var query = context.Notes.AsQueryable();
+
+                query = query.Where(n => n.UserID == userId);
+
+                if (!string.IsNullOrEmpty(text))
+                {
+                    query = query.Where(n => n.Title.Contains(text) || n.Content.Contains(text));
+                }
+
+                if (!string.IsNullOrEmpty(category))
+                {
+                    query = query.Where(n => n.Category == category);
+                }
+
+                return query
+                    .OrderByDescending(n => n.CreationDate)
+                    .ToList();
+            }
+        }
+
+        public List<string> GetUserCategories(int userId)
+        {
+            using (var context = new Context())
+            {
+                return context.Notes
+                    .Where(n => n.UserID == userId && n.Category != null)
+                    .Select(n => n.Category)
+                    .Distinct()
+                    .ToList();
+            }
+        }
     }
-
-
 }
-
