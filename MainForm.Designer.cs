@@ -45,6 +45,8 @@ namespace DigitalNotesManager
             viewToolStripMenuItem = new ToolStripMenuItem();
             notesListToolStripMenuItem = new ToolStripMenuItem();
             arrangeWindowToolStripMenuItem = new ToolStripMenuItem();
+            tileToolStripMenuItem = new ToolStripMenuItem();
+            cascadeToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -156,15 +158,30 @@ namespace DigitalNotesManager
             // notesListToolStripMenuItem
             // 
             notesListToolStripMenuItem.Name = "notesListToolStripMenuItem";
-            notesListToolStripMenuItem.Size = new Size(204, 26);
+            notesListToolStripMenuItem.Size = new Size(224, 26);
             notesListToolStripMenuItem.Text = "Notes List";
             notesListToolStripMenuItem.Click += notesListToolStripMenuItem_Click;
             // 
             // arrangeWindowToolStripMenuItem
             // 
+            arrangeWindowToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tileToolStripMenuItem, cascadeToolStripMenuItem });
             arrangeWindowToolStripMenuItem.Name = "arrangeWindowToolStripMenuItem";
-            arrangeWindowToolStripMenuItem.Size = new Size(204, 26);
+            arrangeWindowToolStripMenuItem.Size = new Size(224, 26);
             arrangeWindowToolStripMenuItem.Text = "Arrange Window";
+            // 
+            // tileToolStripMenuItem
+            // 
+            tileToolStripMenuItem.Name = "tileToolStripMenuItem";
+            tileToolStripMenuItem.Size = new Size(224, 26);
+            tileToolStripMenuItem.Text = "Tile";
+            tileToolStripMenuItem.Click += tileToolStripMenuItem_Click_1;
+            // 
+            // cascadeToolStripMenuItem
+            // 
+            cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
+            cascadeToolStripMenuItem.Size = new Size(224, 26);
+            cascadeToolStripMenuItem.Text = "Cascade";
+            cascadeToolStripMenuItem.Click += cascadeToolStripMenuItem_Click_1;
             // 
             // helpToolStripMenuItem
             // 
@@ -177,7 +194,7 @@ namespace DigitalNotesManager
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(224, 26);
+            aboutToolStripMenuItem.Size = new Size(133, 26);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
@@ -246,5 +263,7 @@ namespace DigitalNotesManager
         private ToolStripMenuItem aboutToolStripMenuItem;
         private FlowLayoutPanel   flowLayoutPanel1;
         private Button btnShowProgress;
+        private ToolStripMenuItem tileToolStripMenuItem;
+        private ToolStripMenuItem cascadeToolStripMenuItem;
     }
 }

@@ -145,8 +145,32 @@ namespace DigitalNotesManager
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutForm aboutForm = new AboutForm();
-            aboutForm.ShowDialog();  
+            aboutForm.ShowDialog();
 
+
+        }
+
+        //---------------------------------------------- neveen
+        //private void tileToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    this.LayoutMdi(MdiLayout.TileHorizontal);
+        //}
+
+        //private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    this.LayoutMdi(MdiLayout.Cascade);
+
+        //}
+
+        private void tileToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            this.LayoutMdi(MdiLayout.TileHorizontal);
+
+        }
+
+        private void cascadeToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+               this.LayoutMdi(MdiLayout.Cascade);
 
         }
     }
