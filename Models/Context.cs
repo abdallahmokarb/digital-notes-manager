@@ -13,7 +13,7 @@ namespace DigitalNotesManager
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=ABDALLAH;Database=DNMDb;Trusted_Connection=True;trust server certificate=true;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-P6O841K\SQLEXPRESS;Database=DNMDb;Trusted_Connection=True;trust server certificate=true;");
         }
 
 

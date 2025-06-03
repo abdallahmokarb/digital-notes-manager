@@ -1,4 +1,4 @@
-﻿using DigitalNotesManager.Repository;
+using DigitalNotesManager.Repository;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.IO;
