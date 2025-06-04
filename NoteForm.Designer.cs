@@ -1,4 +1,4 @@
-﻿namespace DigitalNotesManager
+namespace DigitalNotesManager
 {
     partial class NoteForm
     {

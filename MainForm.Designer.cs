@@ -1,4 +1,4 @@
-﻿namespace DigitalNotesManager
+namespace DigitalNotesManager
 {
     partial class MainForm
     {
@@ -126,21 +126,27 @@
             // 
             // cutToolStripMenuItem
             // 
+            cutToolStripMenuItem.Enabled = false;
             cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             cutToolStripMenuItem.Size = new Size(139, 26);
             cutToolStripMenuItem.Text = "Cut";
+            cutToolStripMenuItem.Click += cutToolStripMenuItem_Click;
             // 
             // copyToolStripMenuItem
             // 
+            copyToolStripMenuItem.Enabled = false;
             copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             copyToolStripMenuItem.Size = new Size(139, 26);
             copyToolStripMenuItem.Text = "Copy";
+            copyToolStripMenuItem.Click += copyToolStripMenuItem_Click;
             // 
             // pasteToolStripMenuItem
             // 
+            pasteToolStripMenuItem.Enabled = false;
             pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             pasteToolStripMenuItem.Size = new Size(139, 26);
             pasteToolStripMenuItem.Text = "Paste";
+            pasteToolStripMenuItem.Click += pasteToolStripMenuItem_Click;
             // 
             // formatToolStripMenuItem
             // 
@@ -158,7 +164,7 @@
             // notesListToolStripMenuItem
             // 
             notesListToolStripMenuItem.Name = "notesListToolStripMenuItem";
-            notesListToolStripMenuItem.Size = new Size(224, 26);
+            notesListToolStripMenuItem.Size = new Size(204, 26);
             notesListToolStripMenuItem.Text = "Notes List";
             notesListToolStripMenuItem.Click += notesListToolStripMenuItem_Click;
             // 
@@ -166,20 +172,20 @@
             // 
             arrangeWindowToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tileToolStripMenuItem, cascadeToolStripMenuItem });
             arrangeWindowToolStripMenuItem.Name = "arrangeWindowToolStripMenuItem";
-            arrangeWindowToolStripMenuItem.Size = new Size(224, 26);
+            arrangeWindowToolStripMenuItem.Size = new Size(204, 26);
             arrangeWindowToolStripMenuItem.Text = "Arrange Window";
             // 
             // tileToolStripMenuItem
             // 
             tileToolStripMenuItem.Name = "tileToolStripMenuItem";
-            tileToolStripMenuItem.Size = new Size(224, 26);
+            tileToolStripMenuItem.Size = new Size(147, 26);
             tileToolStripMenuItem.Text = "Tile";
             tileToolStripMenuItem.Click += tileToolStripMenuItem_Click_1;
             // 
             // cascadeToolStripMenuItem
             // 
             cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            cascadeToolStripMenuItem.Size = new Size(224, 26);
+            cascadeToolStripMenuItem.Size = new Size(147, 26);
             cascadeToolStripMenuItem.Text = "Cascade";
             cascadeToolStripMenuItem.Click += cascadeToolStripMenuItem_Click_1;
             // 
@@ -234,6 +240,7 @@
             MainMenuStrip = menuStrip1;
             Name = "MainForm";
             Text = "MainForm";
+            Load += MainForm_Load_1;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

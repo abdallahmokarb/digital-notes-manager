@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -180,5 +180,20 @@ namespace DigitalNotesManager.Repository
                     .ToList();
             }
         }
+
+
+
+        ////////////////////////////////////////////////
+  
+
+        public List<Note> GetTodaysReminders(int userId)
+{
+    DateTime today = DateTime.Today;
+
+    return context.Notes
+        .Where(n => n.UserID == userId && n.ReminderDate.Date == today)
+        .OrderBy(n => n.ReminderDate)
+        .ToList();
+}
     }
 }

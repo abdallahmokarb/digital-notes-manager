@@ -16,10 +16,16 @@ namespace DigitalNotesManager
         private Note note;
         public delegate void NoteDeletedEventHandler();
         public event NoteDeletedEventHandler NoteDeleted;
+        public event EventHandler CategoryChanged;
+
 
         public NoteCard()
         {
             InitializeComponent();
+            this.CategoryChanged += (s, e) =>
+            {
+                this.BackColor = Color.LightCoral;
+            };
         }
 
         public void SetNote(Note note)
@@ -80,6 +86,7 @@ namespace DigitalNotesManager
                     NoteID = note.NoteID.ToString()
                 };
                 editForm.LoadNoteFromText(note.Title, note.Content, note.Category, note.ReminderDate);
+
                 editForm.NoteSaved += () =>
                 {
                     try
@@ -87,6 +94,8 @@ namespace DigitalNotesManager
                         var updatedNote = new NoteRepository().GetNoteByID(note.NoteID);
                         if (updatedNote != null)
                         {
+                            CheckCategoryChangeAndRaise(note, updatedNote);
+
                             SetNote(updatedNote);
                         }
                         else
@@ -99,7 +108,8 @@ namespace DigitalNotesManager
                         MessageBox.Show($"Error refreshing note: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 };
-                editForm.MdiParent = this.FindForm()?.MdiParent; // Ensure MDI parent consistency
+
+                editForm.MdiParent = this.FindForm()?.MdiParent;
                 editForm.ShowDialog();
             }
             catch (Exception ex)
@@ -107,6 +117,31 @@ namespace DigitalNotesManager
                 MessageBox.Show($"Error opening edit form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+        ///fire event
+        private void CheckCategoryChangeAndRaise(Note oldNote, Note newNote)
+        {
+            if (oldNote.Category != newNote.Category)
+            {
+                OnCategoryChanged();
+            }
+        }
+
+        protected virtual void OnCategoryChanged()
+        {
+            CategoryChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        ///
+        private void NoteCard_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
     }
 }
 

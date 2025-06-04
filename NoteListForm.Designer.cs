@@ -36,16 +36,17 @@ namespace DigitalNotesManager
             btnSearch = new Button();
             downloadBtn = new Button();
             btnClearFilter = new Button();
+            SortBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 77);
+            dataGridView1.Location = new Point(12, 81);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(635, 187);
+            dataGridView1.Size = new Size(681, 210);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -106,7 +107,7 @@ namespace DigitalNotesManager
             downloadBtn.FlatStyle = FlatStyle.Flat;
             downloadBtn.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             downloadBtn.ForeColor = SystemColors.ButtonFace;
-            downloadBtn.Location = new Point(489, 273);
+            downloadBtn.Location = new Point(558, 309);
             downloadBtn.Name = "downloadBtn";
             downloadBtn.Size = new Size(135, 34);
             downloadBtn.TabIndex = 7;
@@ -120,7 +121,7 @@ namespace DigitalNotesManager
             btnClearFilter.FlatStyle = FlatStyle.Popup;
             btnClearFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnClearFilter.ForeColor = Color.White;
-            btnClearFilter.Location = new Point(489, 40);
+            btnClearFilter.Location = new Point(493, 40);
             btnClearFilter.Name = "btnClearFilter";
             btnClearFilter.Size = new Size(94, 35);
             btnClearFilter.TabIndex = 8;
@@ -128,11 +129,26 @@ namespace DigitalNotesManager
             btnClearFilter.UseVisualStyleBackColor = false;
             btnClearFilter.Click += btnClearFilter_Click;
             // 
+            // SortBtn
+            // 
+            SortBtn.BackColor = Color.FromArgb(128, 128, 255);
+            SortBtn.FlatStyle = FlatStyle.Popup;
+            SortBtn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SortBtn.ForeColor = Color.White;
+            SortBtn.Location = new Point(599, 40);
+            SortBtn.Name = "SortBtn";
+            SortBtn.Size = new Size(94, 35);
+            SortBtn.TabIndex = 9;
+            SortBtn.Text = "Sort";
+            SortBtn.UseVisualStyleBackColor = false;
+            SortBtn.Click += SortBtn_Click;
+            // 
             // NoteListForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(654, 319);
+            ClientSize = new Size(718, 409);
+            Controls.Add(SortBtn);
             Controls.Add(btnClearFilter);
             Controls.Add(downloadBtn);
             Controls.Add(btnSearch);
@@ -160,5 +176,6 @@ namespace DigitalNotesManager
         private Button btnSearch;
         private Button downloadBtn;
         private Button btnClearFilter;
+        private Button SortBtn;
     }
 }
