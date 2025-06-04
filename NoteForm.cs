@@ -12,17 +12,28 @@ using DigitalNotesManager.Repository;
 namespace DigitalNotesManager
 {
     public partial class NoteForm : Form
-    {
+    { 
         public string NoteID { get; set; }
         public bool IsNewNote { get; set; } = true;
         public int userID;
         public delegate void NoteSavedEventHandler();
         public event NoteSavedEventHandler NoteSaved;
-
+        //cut & copy part
+        public event EventHandler SelectionChanged;
+        public RichTextBox MainTextBox
+        {
+            get { return richTextBox1; }
+        }
         public NoteForm(int ID)
         {
             InitializeComponent();
             this.userID = ID;
+            ////rest cut
+            richTextBox1.SelectionChanged += (s, e) =>
+            {
+                SelectionChanged?.Invoke(this, EventArgs.Empty);
+            };
+
         }
 
         public void LoadNoteFromText(string title, string content, string category, DateTime reminderDate)

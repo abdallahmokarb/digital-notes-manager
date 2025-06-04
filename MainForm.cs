@@ -3,6 +3,7 @@ using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.IO;
 using System.Windows.Forms;
+ 
 
 namespace DigitalNotesManager
 {
@@ -11,10 +12,15 @@ namespace DigitalNotesManager
         private readonly NoteRepository _noteRepo = new NoteRepository();
         private readonly int _userID;
         private readonly string _username;
+        private List<Note> notes = new List<Note>();
+        private NotifyIcon notifyIcon;
+
+
 
         public MainForm(int userID, string username)
         {
             InitializeComponent();
+            InitializeNotifyIcon();
 
             // Fix for MDI error
             this.IsMdiContainer = true;
@@ -27,7 +33,38 @@ namespace DigitalNotesManager
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
 
             LoadNotes();
+
+
+
         }
+
+
+        private void InitializeNotifyIcon()
+        {
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Visible = true;  
+            notifyIcon.Icon = SystemIcons.Information;  
+            notifyIcon.BalloonTipTitle = "Reminder";
+
+        }
+
+        private void CheckReminders()
+        {
+            DateTime today = DateTime.Today;
+
+            var todayReminders = notes
+                .Where(n => n.ReminderDate.Date == today)
+                .ToList();
+
+            if (todayReminders.Any())
+            {
+                string message = $"Hi {_username}, You have {todayReminders.Count} reminders today";
+                notifyIcon.BalloonTipText = message;
+                notifyIcon.ShowBalloonTip(5000);
+            }
+        }
+
+
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e) { }
 
@@ -35,13 +72,22 @@ namespace DigitalNotesManager
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e) { }
 
-        private void MainForm_Load(object sender, EventArgs e) { }
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+            cutToolStripMenuItem.Enabled = false;
+            copyToolStripMenuItem.Enabled = false;
+            pasteToolStripMenuItem.Enabled = false;
+        }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NoteForm form = new NoteForm(_userID);
             form.MdiParent = this;
             form.NoteSaved += LoadNotes;
+            //nardine
+            form.FormClosed += NoteForm_FormClosed;
+            form.SelectionChanged += NoteForm_SelectionChanged;
             form.Show();
         }
 
@@ -92,6 +138,9 @@ namespace DigitalNotesManager
                 noteForm.LoadNoteFromText(title, content, category, reminderDate);
                 noteForm.NoteSaved += LoadNotes;
                 noteForm.MdiParent = this;
+                ///nardine
+                noteForm.FormClosed += NoteForm_FormClosed;
+                noteForm.SelectionChanged += NoteForm_SelectionChanged;
                 noteForm.Show();
             }
         }
@@ -112,7 +161,7 @@ namespace DigitalNotesManager
 
         private void LoadNotes()
         {
-            var notes = _noteRepo.GetNotesByUserId(_userID);
+             notes = _noteRepo.GetNotesByUserId(_userID);
             flowLayoutPanel1.Controls.Clear();
 
             foreach (var note in notes)
@@ -133,6 +182,8 @@ namespace DigitalNotesManager
 
                 flowLayoutPanel1.Controls.Add(card);
             }
+            CheckReminders();  
+
         }
 
         private void btnShowProgress_Click(object sender, EventArgs e)
@@ -170,8 +221,96 @@ namespace DigitalNotesManager
 
         private void cascadeToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-               this.LayoutMdi(MdiLayout.Cascade);
+            this.LayoutMdi(MdiLayout.Cascade);
 
         }
+
+
+        /////Nardine
+        private void NoteForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            if (!Application.OpenForms.OfType<NoteForm>().Any())
+            {
+                cutToolStripMenuItem.Enabled = false;
+                copyToolStripMenuItem.Enabled = false;
+                pasteToolStripMenuItem.Enabled = false;
+            }
+
+        }
+
+        private void NoteForm_SelectionChanged(object sender, EventArgs e)
+        {
+            var note = sender as NoteForm;
+            if (note != null)
+            {
+                var rtb = note.MainTextBox;
+
+                cutToolStripMenuItem.Enabled = !string.IsNullOrEmpty(rtb.SelectedText);
+                ////
+                copyToolStripMenuItem.Enabled = !string.IsNullOrEmpty(rtb.SelectedText);
+                pasteToolStripMenuItem.Enabled = Clipboard.ContainsText();
+
+            }
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var note = Application.OpenForms.OfType<NoteForm>().FirstOrDefault();
+            if (note != null)
+            {
+                var rtb = note.MainTextBox;
+                if (!string.IsNullOrEmpty(rtb.SelectedText))
+                {
+                    rtb.Cut();
+                }
+            }
+
+
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var note = Application.OpenForms.OfType<NoteForm>().FirstOrDefault();
+            if (note != null)
+            {
+                var rtb = note.MainTextBox;
+                if (!string.IsNullOrEmpty(rtb.SelectedText))
+                {
+                    rtb.Copy();
+                }
+            }
+
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var note = Application.OpenForms.OfType<NoteForm>().FirstOrDefault();
+            if (note != null)
+            {
+                var rtb = note.MainTextBox;
+                if (Clipboard.ContainsText())
+                {
+                    rtb.Paste();
+                }
+            }
+        }
+
+        private void MainForm_Load_1(object sender, EventArgs e)
+        {
+        }
+
+
+       
+
+
+      
+       
+
+      
     }
 }
+   
+

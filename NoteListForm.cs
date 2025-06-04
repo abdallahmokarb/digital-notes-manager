@@ -196,11 +196,12 @@ namespace DigitalNotesManager
         {
             if (_currentNotes == null || !_currentNotes.Any())
             {
-                MessageBox.Show("No notes available to sort.");
+                 MessageBox.Show("You already sorted notes by latest created date");
                 return;
             }
 
-            var sortedNotes = _currentNotes.OrderBy(n => n.Title).ToList();
+            var sortedNotes = _currentNotes.OrderByDescending(n => n.CreationDate).ToList();
+ 
 
             _currentNotes = sortedNotes;
             dataGridView1.DataSource = null;
