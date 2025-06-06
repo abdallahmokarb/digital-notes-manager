@@ -78,11 +78,11 @@ namespace DigitalNotesManager
         private void LoadCategories()
         {
             NoteRepository repo = new NoteRepository();
-            var categories = repo.GetUserCategories(_userID); // <-- you’ll write this
+            var categories = repo.GetUserCategories(_userID); 
 
             cmbCategory.Items.Clear();
             cmbCategory.Items.AddRange(categories.ToArray());
-            cmbCategory.SelectedIndex = -1; // nothing selected by default
+            cmbCategory.SelectedIndex = -1;  
         }
 
 
@@ -109,7 +109,7 @@ namespace DigitalNotesManager
                 {
                     using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName, false))
                     {
-                        // Write header
+
                         for (int i = 0; i < dataGridView1.Columns.Count; i++)
                         {
                             sw.Write(dataGridView1.Columns[i].HeaderText);
@@ -118,14 +118,14 @@ namespace DigitalNotesManager
                         }
                         sw.WriteLine();
 
-                        // Write rows
+
                         foreach (DataGridViewRow row in dataGridView1.Rows)
                         {
                             if (!row.IsNewRow)
                             {
                                 for (int i = 0; i < dataGridView1.Columns.Count; i++)
                                 {
-                                    sw.Write(row.Cells[i].Value?.ToString()?.Replace(",", " ")); // handle commas
+                                    sw.Write(row.Cells[i].Value?.ToString()?.Replace(",", " ")); // commas
                                     if (i < dataGridView1.Columns.Count - 1)
                                         sw.Write(",");
                                 }
@@ -183,7 +183,7 @@ namespace DigitalNotesManager
                 {
                     NoteViewerForm viewerForm = new NoteViewerForm();
                     viewerForm.LoadNote(note);
-                    viewerForm.Show(); // opens in new window
+                    viewerForm.Show();  
                 }
                 else
                 {
