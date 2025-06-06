@@ -147,7 +147,7 @@ namespace DigitalNotesManager
                         sb.AppendLine($"Progress Report for {username}");
                         sb.AppendLine();
 
-                        // headers
+
                         for (int i = 0; i < dgvSummary.Columns.Count; i++)
                         {
                             sb.Append(dgvSummary.Columns[i].HeaderText);
@@ -156,7 +156,7 @@ namespace DigitalNotesManager
                         }
                         sb.AppendLine();
 
-                        // data rows with category headers
+
                         for (int i = 0; i < dgvSummary.Rows.Count; i++)
                         {
                             var category = dgvSummary.Rows[i].Cells["Category"].Value?.ToString() ?? "";

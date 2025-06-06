@@ -3,7 +3,6 @@ using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.IO;
 using System.Windows.Forms;
- 
 
 namespace DigitalNotesManager
 {
@@ -15,15 +14,12 @@ namespace DigitalNotesManager
         private List<Note> notes = new List<Note>();
         private NotifyIcon notifyIcon;
 
-
-
         public MainForm(int userID, string username)
         {
             InitializeComponent();
             InitializeNotifyIcon();
 
-            // Fix for MDI error
-            this.IsMdiContainer = true;
+             this.IsMdiContainer = true;
 
             _userID = userID;
             _username = username;
@@ -33,19 +29,14 @@ namespace DigitalNotesManager
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
 
             LoadNotes();
-
-
-
         }
-
 
         private void InitializeNotifyIcon()
         {
             notifyIcon = new NotifyIcon();
-            notifyIcon.Visible = true;  
-            notifyIcon.Icon = SystemIcons.Information;  
+            notifyIcon.Visible = true;
+            notifyIcon.Icon = SystemIcons.Information;
             notifyIcon.BalloonTipTitle = "Reminder";
-
         }
 
         private void CheckReminders()
@@ -64,8 +55,6 @@ namespace DigitalNotesManager
             }
         }
 
-
-
         private void fileToolStripMenuItem_Click(object sender, EventArgs e) { }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e) { }
@@ -74,7 +63,6 @@ namespace DigitalNotesManager
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
             cutToolStripMenuItem.Enabled = false;
             copyToolStripMenuItem.Enabled = false;
             pasteToolStripMenuItem.Enabled = false;
@@ -85,7 +73,7 @@ namespace DigitalNotesManager
             NoteForm form = new NoteForm(_userID);
             form.MdiParent = this;
             form.NoteSaved += LoadNotes;
-            //nardine
+
             form.FormClosed += NoteForm_FormClosed;
             form.SelectionChanged += NoteForm_SelectionChanged;
             form.Show();
@@ -97,7 +85,7 @@ namespace DigitalNotesManager
             form.MdiParent = this;
             form.Show();
 
-            // Subscribe existing NoteCards to NoteListForm
+
             foreach (Control control in flowLayoutPanel1.Controls)
             {
                 if (control is NoteCard noteCard)
@@ -138,7 +126,7 @@ namespace DigitalNotesManager
                 noteForm.LoadNoteFromText(title, content, category, reminderDate);
                 noteForm.NoteSaved += LoadNotes;
                 noteForm.MdiParent = this;
-                ///nardine
+
                 noteForm.FormClosed += NoteForm_FormClosed;
                 noteForm.SelectionChanged += NoteForm_SelectionChanged;
                 noteForm.Show();
@@ -161,17 +149,17 @@ namespace DigitalNotesManager
 
         private void LoadNotes()
         {
-             notes = _noteRepo.GetNotesByUserId(_userID);
+            notes = _noteRepo.GetNotesByUserId(_userID);
             flowLayoutPanel1.Controls.Clear();
 
             foreach (var note in notes)
             {
                 NoteCard card = new NoteCard();
-                card.SetNote(note);
+                //setNote will automatically extract and apply font/color from note content
+                card.SetNote(note); 
                 card.Width = 410;
                 card.NoteDeleted += LoadNotes;
 
-                // Subscribe to NoteListForm if open
                 foreach (Form form in Application.OpenForms)
                 {
                     if (form is NoteListForm noteListForm)
@@ -182,13 +170,11 @@ namespace DigitalNotesManager
 
                 flowLayoutPanel1.Controls.Add(card);
             }
-            CheckReminders();  
-
+            CheckReminders();
         }
 
         private void btnShowProgress_Click(object sender, EventArgs e)
         {
-
             ProgressForm progressForm = new ProgressForm(_userID, _username);
             progressForm.ShowDialog();
         }
@@ -197,46 +183,28 @@ namespace DigitalNotesManager
         {
             AboutForm aboutForm = new AboutForm();
             aboutForm.ShowDialog();
-
-
         }
 
-        //---------------------------------------------- neveen
-        //private void tileToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    this.LayoutMdi(MdiLayout.TileHorizontal);
-        //}
-
-        //private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    this.LayoutMdi(MdiLayout.Cascade);
-
-        //}
-
+        //----------------------------------------------  
         private void tileToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.TileHorizontal);
-
         }
 
         private void cascadeToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.Cascade);
-
         }
 
-
-        /////Nardine
+        ///// 
         private void NoteForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-
             if (!Application.OpenForms.OfType<NoteForm>().Any())
             {
                 cutToolStripMenuItem.Enabled = false;
                 copyToolStripMenuItem.Enabled = false;
                 pasteToolStripMenuItem.Enabled = false;
             }
-
         }
 
         private void NoteForm_SelectionChanged(object sender, EventArgs e)
@@ -250,13 +218,11 @@ namespace DigitalNotesManager
                 ////
                 copyToolStripMenuItem.Enabled = !string.IsNullOrEmpty(rtb.SelectedText);
                 pasteToolStripMenuItem.Enabled = Clipboard.ContainsText();
-
             }
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             var note = Application.OpenForms.OfType<NoteForm>().FirstOrDefault();
             if (note != null)
             {
@@ -266,13 +232,10 @@ namespace DigitalNotesManager
                     rtb.Cut();
                 }
             }
-
-
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             var note = Application.OpenForms.OfType<NoteForm>().FirstOrDefault();
             if (note != null)
             {
@@ -282,7 +245,6 @@ namespace DigitalNotesManager
                     rtb.Copy();
                 }
             }
-
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -302,15 +264,24 @@ namespace DigitalNotesManager
         {
         }
 
-
-       
-
-
-      
-       
-
-      
+        private void formatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontDialog fontDialog = new FontDialog { ShowColor = true };
+            if (fontDialog.ShowDialog() == DialogResult.OK)
+            {
+                var activeNoteForm = Application.OpenForms.OfType<NoteForm>().FirstOrDefault(f => f.ContainsFocus);
+                if (activeNoteForm != null)
+                {
+                    activeNoteForm.MainTextBox.SelectionFont = fontDialog.Font;
+                    activeNoteForm.MainTextBox.SelectionColor = fontDialog.Color;
+                    activeNoteForm.ContentFont = fontDialog.Font; // update in memory font
+                    activeNoteForm.ContentColor = fontDialog.Color; 
+                }
+                else
+                {
+                    MessageBox.Show("Please open a note to format.", "No Note Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
     }
 }
-   
-

@@ -153,6 +153,7 @@ namespace DigitalNotesManager
             formatToolStripMenuItem.Name = "formatToolStripMenuItem";
             formatToolStripMenuItem.Size = new Size(139, 26);
             formatToolStripMenuItem.Text = "Format";
+            formatToolStripMenuItem.Click += formatToolStripMenuItem_Click;
             // 
             // viewToolStripMenuItem
             // 
